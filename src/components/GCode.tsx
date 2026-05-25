@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react"
-import type{params} from "./FaceFrame"
 import { Modal } from "antd"
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import TextArea from "antd/es/input/TextArea"
@@ -8,13 +7,14 @@ type GCodeProps = {
     title :string
     gCode :string
     color :string
-    setColor :(c:string)=>void
+    setColor :(c:string)=>void,
+    numRows: number
 }
 
 // SVG Polygon and Modal for stiles
 // return SVG polygon and associated modal with gcode to copy
 // svg image will change color after copying 
-export default function GCode({title, gCode, color, setColor}:GCodeProps){
+export default function GCode({title, gCode, color, setColor, numRows}:GCodeProps){
     
     return(
         <>
@@ -27,19 +27,18 @@ export default function GCode({title, gCode, color, setColor}:GCodeProps){
                                 text = {gCode}
                                 onCopy ={()=>setColor("red")}
                             >
-                                <span style={{color:color==="red"?"red":"black"}}
-                                    className="copyButton">
+                                <button style={{color:color==="red"?"red":"black", marginLeft:'30px', border:'1px solid gray', padding:'3px 8px'}}>
                                     {color==="red"?"copied":"copy"}
-                                </span>
+                                </button>
                             </CopyToClipboard>
                         </td>
                     </tr>
                     <tr>
                         <td >
                             <TextArea
-                                rows={14}
+                                rows={numRows}
                                 value={gCode}
-                                style={{width:'250px',color:color==="red"?"red":"black"}}
+                                style={{width:'350px',color:color==="red"?"red":"black"}}
                             />
                         </td>
                     </tr>
